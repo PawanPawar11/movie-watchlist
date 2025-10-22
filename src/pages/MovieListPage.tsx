@@ -33,8 +33,14 @@ const MovieListPage = ({
     fetchPopularMovies();
   }, []);
 
-  const addToWatchList = (movie: Movie) => {
-    setWatchListItems([...watchListItems, movie]);
+  const toggleWatchList = (movie: Movie) => {
+    const alreadyInWatchList = watchListItems.some((m) => m.id === movie.id);
+
+    if (alreadyInWatchList) {
+      setWatchListItems(watchListItems.filter((m) => m.id !== movie.id));
+    } else {
+      setWatchListItems([...watchListItems, movie]);
+    }
   };
 
   return (
@@ -54,7 +60,7 @@ const MovieListPage = ({
               alt=""
             />
             <button
-              onClick={() => addToWatchList(movie)}
+              onClick={() => toggleWatchList(movie)}
               className="text-sm text-white bg-blue-500 px-4 py-1 rounded-sm cursor-pointer"
             >
               {isInWatchList ? "Remove" : "Add to Watchlist"}
